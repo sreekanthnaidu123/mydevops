@@ -1,0 +1,346 @@
+UNIX -  RHEL, Ubuntu, Centos, Amzon LInux, Kalai LInux, Fedora, susi 
+
+AWS: 
+    Amzon Linux
+
+Redhat:
+       RHEL
+       Centos
+       Fedora
+
+Debain:
+       Ubuntu
+
+--------------------------------------------------------------------------------
+AWS -> Linux
+    Key Based Authentication
+
+puttyGen  -> pem - PPK
+Putty -> Take SSh Of your AWS Linux Service / instance
+
+
+Default Username AWS -> Linux
+***************************************
+RHEL & Amazon Linux - ec2-user
+Ubuntu              - Ubuntu  
+Centos              - Centos
+
+===================================================================
+Basic Linux Commands
+********************************
+sudo                        - run the commands With admin access
+sudo su root                - switch to different user 
+pwd                         - cheking the present working Directory
+cd/                         - change directory
+cd <dir name>/              - change directory by name
+cd ..                       - will take you one step back
+clear                       - clear the wipe terminal
+history                     - to display the executed commands
+date                        - display curent date and time  
+ifconfig                    - to display IP details
+LL                          - long list with details
+ls-l /<folder_name>/        - check folder long list with details
+Ls                          - short list no details 
+mkdir <folder_name>         - make or Create a new directory
+touch <file_name>           - to create a new file
+cat <file_name>             - to read a new file
+vi <file_name>              - to add content into new file    (vi or vir)
+                              after that  -   press i - to start write
+		                      < After add the content>
+		                      after  esc plus : wq - write and quit
+wq                          - write and quit
+     sourse     destination
+cp <file_name>/ <dir name>  - copy and paste 
+mv <file_name>/ <dir name> 	- cut and paste	
+		
+=========================================================================
+
+Linux Authentication:
+*****************************************************
+          key  based - password less
+          password based - login
+
+1) 
+    vi /etc/ssh/sshd_config
+      	1) permitroot to login - un command it ( remove # tag )
+		2) password Authentication - yes (add # tag)
+		
+2)
+    working with LInux service - ( start/ stop / restart) service name - sshd
+	
+	systemcli restart < service name > 
+	systemcli start < service name > 
+    systemcli stop < service name > 	
+		
+3)
+   password root - set the passwd to root user		
+ 	
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++=
+
+date  (08-11-2022)
+
+chmod -a -g     - add group to root command 
+
+
+create a file with out root user 
+ 
+    owner      group     public
+     root	    root     public
+
+echo "this is for demo">> <file name>       -  create a new file with out root
+who                                         - find the login users 
+sudo -iu <user name>                        - change user bhanu user to ec2- user
+ | (pipe)                                   - out put ni in put ga estundi
+grep                                        - filter in particilur theam
+ls-l /etc/| grep -l <file_name>             - check one folder with long list with details
+sudo systemctl ststus httpd                 - apache servier running are or not
+ps-ef                                       - check servers running are not
+ps-ef | grep -i<server name>                - check one server running are not
+ping google.com                             - check internet connectvity
+nc                                          - net cat
+nc <ip address> <port no>             
+-iv                                         - httpd verbon meathod      
+curl -iv <httpd ip address> n               - check ip address code connectvity ok or fail
+curl -ivk url 
+
+
+with in the server will use private ips
+
+brouser chesaka kanipinche page name (static content)  
+static content use http://
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+date :- 10-11-2022
+
+edit bucket versinning     -  to create the link to login   
+files  ni object ga pilustaru
+ 
+s3 life cycle policy:
+====================
+
+file-----> standard------>infrequent--------->glassier
+
+[=>open s3 amazon buckets=> and open one bucket and go to=> management and => click life cycle rule=>
+=>enter life cycle name => choose a role => life cycle rule action ( select current version only )=>
+=>standard -1A 30 days   
+=>intelligent-tiering 60 days
+=>one zone -1A 90 days
+=>glacier flexible retrieval 120 days
+=>glacier deep archive 120 days (removed)]
+
+one ec2 instance storage    =  8 gb
+one bucket instance storage = 5tb
+
+storage files in AWS Console:
+=============================
+
+1) S3    - simple storage service
+2) EBS   - elastic block storage 
+3) EFS   - elastic  files storage 
+
+HDD - hard disc drive
+SSD - solid state drive
+
+2) EBS  elastic block storage
+*****************************
+high peformance block storage .
+EBS volume are easy to use and remove .
+
+   typs of EBS volumes :
+   a) general purpose  ssd (gp2)
+   b) provisioned iops ssd (io1)
+   c) throughtput optimized volumes (st1)
+   e) cold hdd volumes (sc1)
+   
+
+a) general purpose  ssd (gp2): 
+------------------------------
+volume size                 - 1gb to 16gb
+throughtput                 - 250mb/sec
+(iops)in out put operations - 16000
+cost                        - $0.1 per 1gb
+ 
+b) provisioned iops ssd (io1):
+------------------------------
+volume size                 - 4gb to 16tb
+throughtput                 - 1000mb/sec
+(iops)in,out put operations - 64000/volume
+cost                        - $0.125 per 1gb 
+(iops)in,out put operations - $0.65 / iops 
+
+c) throughtput optimized volumes (st1) HDD
+------------------------------------------
+volume size                 - 500gb to 16tb
+throughtput                 - 500mb/sec
+(iops)in,out put operations - 500/volume
+cost                        - $0.045 per 1gb
+
+e) cold hdd volumes (sc1)
+--------------------------
+use old data storage
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+11-11-2022
+linux meation key 
+ssh -i <file name> ec2-user@ipaddress       - linux login key 
+df<disk free> -h                            - check disk mount point with details
+lsblk                                       - list of block device how many disk attach
+sudo file -s /dev/<EBS volume name>         - check EBS volume data is available are not
+sudo mkfs -t ext4 /dev/<EBS volume name>    - formate EBS volume Data (delete volume data )
+sudo mount /dev/<EBS volume name>/dir name  - mount EBS volume to dirictory 
+sudo mount /<dir name>                      - mount dir or file or volume  
+sudo unmount -a /<dir name>                 - unmount dir or file or volume 
+sudo systemctl restart httpd                - restart the server
+sudo reboot                                 - reboot the server
+ping -i <ip addres>                         - after reboot check server up are not
+uptime                                      - check served update time 
+ 
+after reboot mounted file was automaticalli re mounted we mount  this data by  os level  after reboot mounter data was not un mount
+
+check :
+       back up the /etc/fstab.file.
+	   sudo cp /etc/fstabn /etc/fstab.bak
+	   sudo vi  /etc/fstab  enter the  data is below formate
+	     (/dev/xvdf       /<volume name>  etc4  | defaults.nofail      0    0)
+		
+		
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\
+
+15-11-2022
+
+ssh -i practic.pem ec2-user@<ip address>    - login in into gitbash
+sudo resize2fs <file name>                  - resize  the EBS volume  file storage 
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+16-11-2022
+
+load balancer :
+*******************
+classic loadbalancer		 
+network loadbalancer
+application loadbalancer
+
+internet--------------->intranet :reverse proxy
+intranet--------------->internet :forward proxy
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+28-11-2022
+
+=======================================================================================================
+
+…or create a new repository on the command line
+echo "# devopslearning" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/paru2313/devopslearning.git
+git push -u origin main
+
+
+…or push an existing repository from the command line
+git remote add origin https://github.com/paru2313/devopslearning.git
+git branch -M main
+git push -u origin main
+
+
+
+
+
+
+$ mkdir devopslearning
+
+
+
+kumar@INBOOK_X1_NEO MINGW64 /c/shivakumar/vinod kumar/AWS
+$ cd devopslearning/
+
+$ git init
+Initialized empty Git repository in C:/shivakumar/vinod kumar/AWS/devopslearning/.git/
+
+$ ls -ltrah
+total 4.0K
+drwxr-xr-x 1 kumar 197609 0 Nov 29 12:55 ../
+drwxr-xr-x 1 kumar 197609 0 Nov 29 12:56 ./
+drwxr-xr-x 1 kumar 197609 0 Nov 29 12:56 .git/
+
+$ echo "this is my file1" >> file1.txt
+
+$ echo "this is my file2" >> file2.txt
+
+$ ll
+total 2
+-rw-r--r-- 1 kumar 197609 17 Nov 29 12:59 file1.txt
+-rw-r--r-- 1 kumar 197609 17 Nov 29 13:00 file2.txt
+
+$ git status
+On branch master
+
+No commits yet
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        file1.txt
+        file2.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+$ git add .
+warning: in the working copy of 'file1.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'file2.txt', LF will be replaced by CRLF the next time Git touches it
+
+$ git status
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+        new file:   file1.txt
+        new file:   file2.txt
+
+$ git commit -m "added file1 and file2"
+Author identity unknown
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got 'kumar@INBOOK_X1_NEO.(none)')
+
+$ git config --global user.email "kumarvinod2313@gmail.com"
+
+$  git config --global user.name "paru2313"
+
+$ git commit -m "added file1 and file2"
+[master (root-commit) 8f27105] added file1 and file2
+ 2 files changed, 2 insertions(+)
+ create mode 100644 file1.txt
+ create mode 100644 file2.txt
+
+$ git remote add origin https://github.com/paru2313/devopslearning.git
+
+$ git push origin master
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (4/4), 283 bytes | 283.00 KiB/s, done.
+Total 4 (delta 0), reused 0 (delta 0), pack-reused 0
+To https://github.com/paru2313/devopslearning.git
+ * [new branch]      master -> master
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+30-11-2022
